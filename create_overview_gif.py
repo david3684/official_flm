@@ -43,7 +43,8 @@ fig.patch.set_facecolor('#FAFAFA')
 # Animation settings - more frames for smoother transitions
 frames_per_step = 8  # Interpolation frames between each step
 max_steps = max(ar_n_rows, md_n_rows, flm_n_rows)
-max_frames = max_steps * frames_per_step
+linger_frames = 30  # 5 seconds at 10 fps
+max_frames = max_steps * frames_per_step + linger_frames
 
 
 def ease_in_out(t):
@@ -111,7 +112,11 @@ def draw_ar(ax, frame):
     # Final clean bottom row
     if current_step == ar_n_rows - 1:
         y_bot = 0.98 - (ar_n_rows - 1) * (0.98 / (ar_n_rows - 1))
-        final_alpha = min(1.0, t_smooth * 1.5)
+        # Only fade in during the actual transition to final step
+        if frame < ar_n_rows * frames_per_step:
+            final_alpha = min(1.0, t_smooth * 1.5)
+        else:
+            final_alpha = 1.0
         for idx, x_c in enumerate(x_positions[:ar_n_rows]):
             ax.text(
                 x_c, y_bot, ar_clean_tokens[idx],
