@@ -20,6 +20,31 @@
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="icon" href="./static/images/favicon.svg">
 
+  <style>
+        sheel-comment {
+            display: inline-block; /* change to none for production */
+            background-color: #fff3cd; /* Soft yellow */
+            color: #856404;            /* Deep brown/gold */
+            border-left: 4px solid #ffeeba;
+            padding: 2px 8px;
+            margin: 0 5px;
+            font-size: 0.85rem;
+            font-family: sans-serif;
+            font-style: italic;
+            border-radius: 4px;
+            cursor: help;
+        }
+
+        /* Adds a "Review:" prefix automatically */
+        sheel-comment::before {
+            content: "Sheel: ";
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            margin-right: 4px;
+        }
+    </style>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
@@ -132,28 +157,36 @@
 
 <section class="section">
   <div class="container is-max-desktop">
+    <!-- TL;DR -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-5">TL;DR</h2>
+        <div class="content has-text-justified">
+          <p>
+            We introduce Flow-based Language Models (FLM), a method that enables <strong>one-step parallel text generation</strong>
+            through continuous denoising, achieving an <strong>8.3× speedup</strong> over existing approaches. FLM outperforms discrete diffusion in both quality and speed.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ TL;DR -->
+    
     <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We introduce Flow-based Language Models (FLM), a method that enables one-step parallel text generation
-            through continuous denoising, achieving an 8.3× speedup over existing approaches.
-          </p>
-          <p>
+            <sheel-comment>I have used a different abstract than what we have written in the paper. Trying to compare to AR too.</sheel-comment>
             Unlike autoregressive models that generate tokens sequentially, FLM leverages flow matching to
-            directly map noise to coherent text in a single step. Our key insight is that continuous denoising
-            in the learned embedding space enables more effective flow-based generation compared to discrete
+            directly map noise to coherent text in as few as just 1 step. Our key insight is that continuous denoising
+            in the one-hot space enables more effective flow-based generation compared to discrete
             diffusion approaches. We introduce flow map distillation (FLM-distill), which distills multi-step
             flow models into efficient one-step generators while preserving generation quality.
           </p>
           <p>
-            We demonstrate that FLM achieves competitive performance with state-of-the-art diffusion language
-            models while requiring significantly fewer inference steps. Our one-step FLM-distill model matches
-            the quality of 8-step discrete diffusion models, enabling practical deployment of non-autoregressive
-            language generation. We evaluate FLM on multiple text generation benchmarks, showing that continuous
-            denoising consistently outperforms discrete approaches in both quality and efficiency.
+            We demonstrate our approach through extensive experiments on the OpenWebText and 1-Billion Words (LM1B) datasets. Our one-step FLM-distill model matches
+            the quality of state-of-the-art 8-step discrete diffusion models, calling into question the widely held hypothesis that discrete diffusion processes are necessary for generative modeling over discrete modalities.
           </p>
         </div>
       </div>
