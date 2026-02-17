@@ -9,7 +9,7 @@ plt.rcParams.update({
     "axes.unicode_minus": False,
 })
 
-# Data for all three animations
+# Data for all animations
 vocab = ["I", "live", "in", "New", "York", "queens", "colors", "cloud", "sea", "waves",
          "San", "Diego", "how", "who", "where", "zumba"]
 
@@ -27,6 +27,10 @@ flm_clean_tokens = ["I", "live", "in", "New", "York"]
 flm_n_rows = 4
 flm_layers_top = 30
 flm_layers_bottom = 0
+
+# FLM-Distill configuration
+flm_distill_clean_tokens = ["I", "live", "in", "New", "York"]
+flm_distill_layers = 30
 np.random.seed(1)
 
 # Color scheme
@@ -36,8 +40,8 @@ TEXT_COLOR = "#1A1A1A"
 FINAL_TEXT_COLOR = "#000000"
 TITLE_COLOR = "#1A1A1A"
 
-# Create figure with 3 subplots side by side
-fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 3.2))
+# Create figure with 4 subplots side by side
+fig, (ax1, ax2, ax3, ax4) = plt.subplots(1, 4, figsize=(20, 3.2))
 fig.patch.set_facecolor('#FAFAFA')
 
 # Animation settings - more frames for smoother transitions
@@ -285,11 +289,130 @@ def draw_flm(ax, frame):
             )
 
 
+def draw_flm_distill(ax, frame):
+    """Draw FLM-Distill animation on given axis"""
+    ax.clear()
+    ax.set_xlim(0, 1)
+    ax.set_ylim(-0.05, 1.15)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_facecolor('#FAFAFA')
+    for sp in ax.spines.values():
+        sp.set_visible(False)
+
+    # Add title
+    ax.set_title("FLM-Distill (Ours)", fontsize=16, fontweight='600', pad=20, y=1.05, color=TITLE_COLOR)
+
+    x_positions = np.linspace(0.04, 0.96, len(flm_distill_clean_tokens))
+
+    # Calculate animation progress
+    # Step 1: fade in first row (frames 0-7)
+    # Step 2: fade in arrow (frames 8-15)
+    # Step 3: fade in final row (frames 16-23)
+    # Then linger
+
+    current_step = min(frame // frames_per_step, 2)
+    t = (frame % frames_per_step) / frames_per_step
+    t_smooth = ease_in_out(t)
+
+    # First row (noisy) - always visible after step 0
+    if current_step >= 0:
+        y_top = 0.98
+        p_clean = 0.0  # First row is very noisy
+        jitter_scale = 0.01
+
+        # Fade in alpha for first row
+        if current_step == 0:
+            row_alpha = min(1.0, t_smooth * 1.5)
+        else:
+            row_alpha = 1.0
+
+        for idx, x_c in enumerate(x_positions):
+            correct_word = flm_distill_clean_tokens[idx]
+
+            # Fixed RNG per token
+            rng = np.random.default_rng(seed=2000 + idx)
+
+            # Box
+            ax.text(
+                x_c, y_top, "           ",
+                ha='center', va='center', fontsize=14,
+                bbox=dict(
+                    boxstyle="round,pad=0.25,rounding_size=0.2",
+                    facecolor=BOX_FACE_COLOR,
+                    edgecolor=BOX_EDGE_COLOR,
+                    linewidth=1.5,
+                ),
+                alpha=row_alpha,
+                zorder=1
+            )
+
+            # Multiple overlapping noisy words
+            for layer in range(flm_distill_layers):
+                word = correct_word if rng.random() < p_clean else rng.choice(vocab)
+                dx = rng.normal(scale=jitter_scale)
+                alpha = 0.06 * row_alpha
+
+                ax.text(
+                    x_c + dx, y_top, word,
+                    fontsize=14, fontweight='500',
+                    ha='center', va='center',
+                    color=TEXT_COLOR, alpha=alpha, zorder=2
+                )
+
+    # Arrow - visible after step 1
+    if current_step >= 1:
+        y_arrow = 0.52
+
+        # Fade in alpha for arrow
+        if current_step == 1:
+            arrow_alpha = min(1.0, t_smooth * 1.5)
+        else:
+            arrow_alpha = 1.0
+
+        ax.annotate('', xy=(0.5, 0.15), xytext=(0.5, 0.90),
+                    arrowprops=dict(arrowstyle='->', lw=3, color=BOX_EDGE_COLOR, alpha=arrow_alpha))
+
+    # Final row (clean) - visible after step 2
+    if current_step >= 2:
+        y_bot = 0.02
+
+        # Fade in alpha for final row
+        if current_step == 2 and frame < 3 * frames_per_step:
+            final_alpha = min(1.0, t_smooth * 1.5)
+        else:
+            final_alpha = 1.0
+
+        for idx, x_c in enumerate(x_positions):
+            # Box
+            ax.text(
+                x_c, y_bot, "           ",
+                ha='center', va='center', fontsize=14,
+                bbox=dict(
+                    boxstyle="round,pad=0.25,rounding_size=0.2",
+                    facecolor=BOX_FACE_COLOR,
+                    edgecolor=BOX_EDGE_COLOR,
+                    linewidth=1.5,
+                ),
+                alpha=final_alpha,
+                zorder=1
+            )
+
+            # Clean word
+            ax.text(
+                x_c, y_bot, flm_distill_clean_tokens[idx],
+                fontsize=14, fontweight='normal',
+                ha='center', va='center',
+                color=FINAL_TEXT_COLOR, alpha=final_alpha, zorder=5
+            )
+
+
 def update_all(frame):
-    """Update all three subplots"""
+    """Update all four subplots"""
     draw_ar(ax1, frame)
     draw_mask_diffusion(ax2, frame)
     draw_flm(ax3, frame)
+    draw_flm_distill(ax4, frame)
 
 
 # Create animation
