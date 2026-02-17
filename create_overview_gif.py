@@ -75,21 +75,15 @@ def draw_ar(ax, frame):
     for r in range(current_step + 1):
         y = 0.98 - r * (0.98 / (ar_n_rows - 1))
 
-        # Determine how many tokens to show in this row
-        num_tokens = r + 1
+        # Row fade-in alpha
+        row_alpha = 1.0
         if r == current_step and current_step < ar_n_rows - 1:
-            # Animate the appearance of new token
-            tokens_to_show = r + int(t_smooth > 0.3)
-        else:
-            tokens_to_show = num_tokens
+            row_alpha = min(1.0, t_smooth * 1.5)
 
-        for idx, x_c in enumerate(x_positions[:tokens_to_show]):
+        # Show all tokens up to r+1 for this row
+        for idx in range(r + 1):
+            x_c = x_positions[idx]
             correct_word = ar_clean_tokens[idx]
-
-            # Calculate alpha for smooth fade-in
-            alpha = 1.0
-            if r == current_step and idx == r and current_step < ar_n_rows - 1:
-                alpha = min(1.0, t_smooth * 2.0)
 
             # Box
             ax.text(
@@ -101,7 +95,7 @@ def draw_ar(ax, frame):
                     edgecolor=BOX_EDGE_COLOR,
                     linewidth=1.5,
                 ),
-                alpha=alpha,
+                alpha=row_alpha,
                 zorder=1
             )
 
@@ -111,14 +105,14 @@ def draw_ar(ax, frame):
                     x_c, y, correct_word,
                     fontsize=14, fontweight='500',
                     ha='center', va='center',
-                    color=TEXT_COLOR, alpha=alpha, zorder=2
+                    color=TEXT_COLOR, alpha=row_alpha, zorder=2
                 )
 
     # Final clean bottom row
     if current_step == ar_n_rows - 1:
         y_bot = 0.98 - (ar_n_rows - 1) * (0.98 / (ar_n_rows - 1))
         final_alpha = min(1.0, t_smooth * 1.5)
-        for idx, x_c in enumerate(x_positions):
+        for idx, x_c in enumerate(x_positions[:ar_n_rows]):
             ax.text(
                 x_c, y_bot, ar_clean_tokens[idx],
                 fontsize=14, fontweight='normal',
@@ -216,7 +210,7 @@ def draw_flm(ax, frame):
         sp.set_visible(False)
 
     # Add title
-    ax.set_title("FLM", fontsize=16, fontweight='600', pad=20, y=1.05, color=TITLE_COLOR)
+    ax.set_title("FLM (Ours)", fontsize=16, fontweight='600', pad=20, y=1.05, color=TITLE_COLOR)
 
     x_positions = np.linspace(0.04, 0.96, len(flm_clean_tokens))
 
