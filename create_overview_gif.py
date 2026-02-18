@@ -39,10 +39,11 @@ BOX_EDGE_COLOR = "#2E86AB"
 TEXT_COLOR = "#1A1A1A"
 FINAL_TEXT_COLOR = "#000000"
 TITLE_COLOR = "#1A1A1A"
+HIGHLIGHT_COLOR = "#FF6B6B"  # Light red for masked diffusion highlights
 
 # Create figure with 4 subplots side by side
 fig, (ax1, ax2, ax3, ax4) = plt.subplots(1, 4, figsize=(20, 3.2))
-fig.patch.set_facecolor('#FAFAFA')
+fig.patch.set_facecolor('#FFFFFF')
 
 # Animation settings - more frames for smoother transitions
 frames_per_step = 8  # Interpolation frames between each step
@@ -63,7 +64,7 @@ def draw_ar(ax, frame):
     ax.set_ylim(-0.05, 1.15)
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.set_facecolor('#FAFAFA')
+    ax.set_facecolor('#FFFFFF')
     for sp in ax.spines.values():
         sp.set_visible(False)
 
@@ -137,7 +138,7 @@ def draw_mask_diffusion(ax, frame):
     ax.set_ylim(-0.05, 1.15)
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.set_facecolor('#FAFAFA')
+    ax.set_facecolor('#FFFFFF')
     for sp in ax.spines.values():
         sp.set_visible(False)
 
@@ -179,11 +180,13 @@ def draw_mask_diffusion(ax, frame):
             # Mask / token logic
             if r < md_n_rows - 1:
                 word = correct_word if r >= md_unmask[idx] else "[Mask]"
+                # Highlight "New" and "Diego" in light red (only when revealed)
+                text_color = HIGHLIGHT_COLOR if word in ["New", "Diego"] else TEXT_COLOR
                 ax.text(
                     x_c, y, word,
                     fontsize=14, fontweight='500',
                     ha='center', va='center',
-                    color=TEXT_COLOR, alpha=row_alpha, zorder=2
+                    color=text_color, alpha=row_alpha, zorder=2
                 )
 
     # Final clean bottom row
@@ -195,11 +198,14 @@ def draw_mask_diffusion(ax, frame):
         else:
             final_alpha = 1.0
         for idx, x_c in enumerate(x_positions):
+            word = md_clean_tokens[idx]
+            # Highlight "New" and "Diego" in light red
+            text_color = HIGHLIGHT_COLOR if word in ["New", "Diego"] else FINAL_TEXT_COLOR
             ax.text(
-                x_c, y_bot, md_clean_tokens[idx],
+                x_c, y_bot, word,
                 fontsize=14, fontweight='normal',
                 ha='center', va='center',
-                color=FINAL_TEXT_COLOR, alpha=final_alpha, zorder=5
+                color=text_color, alpha=final_alpha, zorder=5
             )
 
 
@@ -214,7 +220,7 @@ def draw_flm(ax, frame):
     ax.set_ylim(-0.05, 1.15)
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.set_facecolor('#FAFAFA')
+    ax.set_facecolor('#FFFFFF')
     for sp in ax.spines.values():
         sp.set_visible(False)
 
@@ -296,7 +302,7 @@ def draw_flm_distill(ax, frame):
     ax.set_ylim(-0.05, 1.15)
     ax.set_xticks([])
     ax.set_yticks([])
-    ax.set_facecolor('#FAFAFA')
+    ax.set_facecolor('#FFFFFF')
     for sp in ax.spines.values():
         sp.set_visible(False)
 
@@ -426,5 +432,5 @@ anim = FuncAnimation(
 
 # Adjust layout and save
 plt.tight_layout(rect=[0, 0, 1, 0.92], pad=2.5)
-anim.save("overview.gif", writer=PillowWriter(fps=10), dpi=150)
+anim.save("figures/overview.gif", writer=PillowWriter(fps=10), dpi=150)
 
