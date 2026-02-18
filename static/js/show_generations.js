@@ -30,6 +30,8 @@ const items = document.querySelectorAll('.carousel-item');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const counter = document.querySelector('.slide-counter');
+const pplEl = document.getElementById('fmlm-ppl');
+const entropyEl = document.getElementById('fmlm-entropy');
 
 let currentIndex = 0;
 
@@ -46,6 +48,15 @@ function updateCarousel(newIndex) {
   // 4. Update the counter text
   if(counter) {
       counter.textContent = `Sample ${currentIndex + 1} / ${items.length}`;
+  }
+
+  // 5. Update per-sample metrics (Gen. PPL & Entropy)
+  const currentItem = items[currentIndex];
+  if (pplEl && currentItem.dataset.ppl) {
+      pplEl.textContent = currentItem.dataset.ppl;
+  }
+  if (entropyEl && currentItem.dataset.entropy) {
+      entropyEl.textContent = currentItem.dataset.entropy;
   }
 }
 

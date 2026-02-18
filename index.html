@@ -646,44 +646,54 @@
           <h2 class="title is-3">One-step Samples (LM1B)</h2>
           <div class="content has-text-justified">
             <p>
-              Below are <em>uncherrypicked</em> samples generated in a <strong>single forward pass</strong> on LM1B. FMLM is much more fluent, while discrete diffusion baselines either generate random text or show repetition of frequent tokens at one step.
+              Below are samples generated in a <strong>single forward pass</strong> on LM1B. FMLM is much more fluent, while discrete diffusion baselines either generate random text or show repetition of frequent tokens at one step.
             </p>
           </div>
           
           <div class="sample-box ours">
             <div class="sample-header">
               <span class="model-name">FMLM (Ours)</span>
-              <span class="metrics">Gen. PPL: <strong><span class="good-text">95.47</span></strong> &nbsp;|&nbsp; Entropy: <strong><span class="good-text">4.10</span></strong></span>
+              <span class="metrics" id="fmlm-metrics">Gen. PPL: <strong><span class="good-text" id="fmlm-ppl">95.47</span></strong> &nbsp;|&nbsp; Entropy: <strong><span class="good-text" id="fmlm-entropy">4.10</span></strong></span>
             </div>
             <div class="carousel fmlm-carousel">
-              <div class="carousel-item item-1">
+              <div class="carousel-item item-1" data-ppl="95.47" data-entropy="4.10">
                 <div class="sample-content">
                   [CLS] had been unable to allow them to go outside the court. [CLS] this is for the court it deserves. [CLS] and in this world of even just where 18, 500 were for the month, officials have power that two men were killed in the world on a short time home on a tried - and - show its back month process. [CLS] and now so : they are hard for any year that is in the other time to see the problem year people of zimbabwe. [CLS] an independent team of top scientists could be sent on the more year of a decade - in with john's "city," on the next government, the agency [CLS]
                 </div>
               </div>
-              <div class="carousel-item item-2 hidden">
+              <div class="carousel-item item-2 hidden" data-ppl="90.94" data-entropy="4.13">
                 <div class="sample-content">
                   [CLS] be that people in the community, now this would give me for less. [CLS] it's that but the second of the film will have been them there while some of them are not get them for week. [CLS] at any in his own country, he was no one who had working money, if there had be no at the first of two of what real not think that's life in white is the best, i think, don't the right of his, but they can could make it not for or for a high - business team. [CLS] if she said that women, many years she was not expected to say [CLS]
                 </div>
               </div>
-              <div class="carousel-item item-3 hidden">
+              <div class="carousel-item item-3 hidden" data-ppl="115.36" data-entropy="4.16">
                 <div class="sample-content">
                   [CLS] began when the florida department of had and wildlife issued the report. [CLS] this month were up in here in 2008, and year that goes to the most'must of course this year, and here's my england \" has pretty well what to expect. [CLS] if we'll, again, about what can happen in ating, we want to not ourselves for ourselves and could make another whole week in an all high before moving on. [CLS] news, where, in public if they wish, defense officials said. [CLS] within there and maybe not they have interfered with his time. [CLS] sales in support - which has been rising through [CLS]
                 </div>
               </div>
-              <div class="carousel-item item-4 hidden">
+              <div class="carousel-item item-4 hidden" data-ppl="82.46" data-entropy="4.11">
                 <div class="sample-content">
                   [CLS] was to be to the rescue, but there's no doubt that we could offer to help. " [CLS] all the facts are not known. [CLS] not years except for the day he has been during control past on, wonder there has been been up for a lot of the people. [CLS] the 10, are after this that it needs to be with what you have a fire's. [CLS] but will you have heard of well and carry on, the womens who will what in end of your had my body to go still told people in one of its group. [CLS] she was the double - being for just because we went [CLS]
                 </div>
               </div>
-              <div class="carousel-item item-5 hidden">
+              <div class="carousel-item item-5 hidden" data-ppl="97.42" data-entropy="4.19">
                 <div class="sample-content">
                   [CLS] never - hard victory that could top two place because of time over the weekend to respond to the head of the judges, who said which presided over by both players had to put themselves in charge of the nation. [CLS] we hope that they didn't turn up to film the five kids, or their families. [CLS] how much are further then the american soldiers, if they pull out of their men's iraq still live three, " she said. [CLS] they also plan to pass on the ball back, and the investigation is long. [CLS] toyota said its first exports to china in the early 1990s. [CLS] no court to change that [CLS]
                 </div>
               </div>
-              <div class="carousel-item item-6 hidden">
+              <div class="carousel-item item-6 hidden" data-ppl="94.71" data-entropy="4.19">
                 <div class="sample-content">
                   [CLS] the public and private sectors, especially the condition that they'be in on. [CLS] i was on tour and i'm trying to tell myself he was no 8 ; he won just one against how to the people to get to the finals and yes, the rest of ireland - - youon also have senior people in the american squad. [CLS] in this respect, it's kind of " public " that's worse for worse than that four million americans who tend to call 2006's security as a threat or a real threat than the taliban was. [CLS] he might have found him on, that he should, that there [CLS]
+                </div>
+              </div>
+              <div class="carousel-item item-6 hidden" data-ppl="109.01" data-entropy="4.18">
+                <div class="sample-content">
+                  [CLS] and the world is on their watch. [CLS] working in home and lost this year will be best in the fall in 10, as she can go over for more than four years and could go yearsly to the state of the state's home with the us year. [CLS] his sc that under would, he used by home office, the next year whose he will be will us because all ; is an argument through your, that a few was only brought up with this. [CLS] \" there for us ; in. [CLS] if the woman make a time to court. [CLS] if you have been listening to say it's good time [CLS]
+                </div>
+              </div>
+              <div class="carousel-item item-6 hidden" data-ppl="112.91" data-entropy="4.29">
+                <div class="sample-content">
+                  [CLS] most of the month or more who has been in the us party to us pay me that the us are set to / now... [CLS] when he was a campaign that could made to work back - only you had what was right, but to no other technology, the next people. [CLS] it says that those who could have a little for federal benefit. [CLS] \" mr law, also at home many things which are up for the better every year, so in two times out, he was how a lot he was away. [CLS] strauss said after just one one before day many that he had first thought levels were very high after [CLS]
                 </div>
               </div>
             </div>
