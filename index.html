@@ -330,7 +330,7 @@
                       <span class="icon">
                         <i class="fas fa-file-pdf"></i>
                       </span>
-                      <span>Paper (Coming Soon)</span>
+                      <span>Pdf (Coming Soon)</span>
                     </a>
                   </span>
                   <span class="link-block">
@@ -433,7 +433,7 @@
               FLM uses the same multi-token classification objective as discrete diffusion models, but instead of 
               updating the discrete state from one-token to another, FLM gradually denoises all tokens in parallel.
               This enables FLM to represent a superposition of sequences while also capturing correlations between tokens &#8212;
-              a fundamental bottleneck with discrete diffusion models in the few-step regime. 
+              a fundamental bottleneck (see below figure) with discrete diffusion models in the few-step regime. 
             </p>
             <figure class="image" style="margin: 24px 0;">
               <img src="figures/combined_diffusion_comparison.png">
@@ -447,8 +447,8 @@
             </figure>
             <p>
               We revisit the fundamentals of flows over discrete modalities and leverage a novel time-reparametrization
-              to enable efficient training of FLM. We also introduce a "Denoising Flow Map" that enables distillation over the simplex using cross-entropy loss. Finally, we use Flow Map Distillation to distill our multi-step flow model into its associated flow map (FMLM), 
-              enabling one-step generation with minimal loss in quality.
+              to enable efficient training of FLM. We also introduce the methods to train a flow-map over language data. We use semigroup flow-map distillation to build an associated flow map (FMLM), 
+              enabling one-step language sequence generation, while discrete baselines catastrophically fails in the regime.
             </p>
           </div>
         </div>
@@ -549,7 +549,7 @@
           <figure class="image" style="margin: 28px 0;">
             <img src="figures/combined_few_step_comparison.png" alt="Few-step generation comparison" style="max-width: 100%;">
             <figcaption class="has-text-centered" style="margin-top: 10px; font-size: 0.85rem; color: #666;">
-              Few-step generation on LM1B (left) and OpenWebText (right). FMLM (red) maintains both low perplexity and healthy entropy, while discrete baselines degrade sharply.
+              Few-step generation on LM1B (left) and OpenWebText (right). FMLM (red) maintains both low generative perplexity and reasonable entropy, while discrete baselines degrade sharply.
             </figcaption>
           </figure>
           
@@ -757,11 +757,7 @@
   <section class="section" id="BibTeX">
     <div class="container is-max-widescreen content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>@article{lee2025flm,
-        author    = {Lee, Chanhyuk and Yoo, Jaehoon and Agarwal, Manan and Shah, Sheel and Huang, Jerry and Raghunathan, Aditi and Hong, Seunghoon and Boffi, Nicholas M. and Kim, Jinwoo},
-        title     = {Continuous Denoising Enables One-step Language Modeling},
-        journal   = {arXiv preprint},
-        year      = {2025},
+      <pre><code>Coming Soon
       }</code></pre>
     </div>
   </section>
