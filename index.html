@@ -303,7 +303,7 @@
             <p>
               By distilling FLM into its associated <em>flow map</em>, we obtain a distilled language model (<strong>FMLM</strong>) capable of few-step generation.
               On the LM1B and OWT language datasets, FLM attains generation quality competitive with state-of-the-art discrete diffusion models.
-              With FMLM, we outperform recent few-step language models across the board, achieving state-of-the-art performance for both few (1,2,4,8) and many (512,1024) steps.
+              With FMLM, we outperform recent few-step language models across the board, achieving state-of-the-art performance in both few (1,2,4,8) and many (512,1024) steps.
               Our work calls into question the widely held hypothesis that discrete diffusion processes are necessary for generative modeling over discrete modalities, and paves the way toward accelerated flow-based language modeling at scale.
             </p>
           </div>
@@ -349,7 +349,7 @@
             </figure>
             <p>
               We revisit the fundamentals of flows over discrete modalities and leverage a novel time-reparametrization
-              to enable efficient training of FLM. Finally, we use Flow Map Distillation to distill our multi-step flow model into its associated flow map (FMLM), 
+              to enable efficient training of FLM. We also introduce a "Denoising Flow Map" that enables distillation over the simplex using cross-entropy loss. Finally, we use Flow Map Distillation to distill our multi-step flow model into its associated flow map (FMLM), 
               enabling one-step generation with minimal loss in quality.
             </p>
           </div>
